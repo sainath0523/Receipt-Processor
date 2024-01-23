@@ -13,6 +13,9 @@ import java.time.format.DateTimeParseException;
 public class RetailerReceiptValidation {
 
     public void validateRetailerReceiptRequest(ReceiptProcessRequest request) {
+        if (request.getRetailer().isBlank()) {
+            throw new CustomExceptionHandler("Retailer is Empty/Blank");
+        }
         try {
             Constants.dateFormat.parse(request.getPurchaseDate());
         } catch (DateTimeParseException e) {

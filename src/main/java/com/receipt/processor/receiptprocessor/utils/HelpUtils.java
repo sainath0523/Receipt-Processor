@@ -19,9 +19,8 @@ public class HelpUtils {
     public static String generateUniqueId() {
         long currentTimeNano = System.nanoTime();
         long threadId = Thread.currentThread().getId();
-        Instant now = Instant.now();
-
-        String id = now.toString() + "-" + currentTimeNano + "-" + threadId;
+        long epochMilli = Instant.now().toEpochMilli();
+        String id = epochMilli + "-" + currentTimeNano + "-" + threadId;
         return id;
     }
 

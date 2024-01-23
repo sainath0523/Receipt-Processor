@@ -8,14 +8,15 @@ import com.receipt.processor.receiptprocessor.service.ReceiptProcessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
-@RequestMapping("/receipt-processor/api/v1/")
+@RequestMapping("/api/receipt-processor/v1/")
 public class ReceiptProcessorController {
 
     @Autowired
     ReceiptProcessorService receiptProcessorService;
 
-    @PostMapping("/receipts/process")
+    @PostMapping(value = "/receipts/process", consumes = "application/json", produces = "application/json")
     public ReceiptProcessorResponse saveRetailerReceipt(@RequestBody ReceiptProcessRequest request) {
         try {
             return receiptProcessorService.saveRetailerReceipt(request);
@@ -24,7 +25,7 @@ public class ReceiptProcessorController {
         }
     }
 
-    @GetMapping("/receipts/{id}/points")
+    @GetMapping(value = "/receipts/{id}/points", produces = "application/json")
     public GetPointsResponse getPoints(@PathVariable("id") String id) {
         try {
             if (id.isBlank()) {

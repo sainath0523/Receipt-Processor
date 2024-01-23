@@ -30,9 +30,15 @@ public class ReceiptProcessorService {
 
 
     public ReceiptProcessorResponse saveRetailerReceipt(ReceiptProcessRequest request) {
-
         ReceiptProcessorResponse response = new ReceiptProcessorResponse();
+        RetailerReceipt receipt = ReceiptProcessorToRetailerMap.requestToEntity(request, processReceipt(request));
+        retailerReceiptRepository.save(receipt);
+        response.setId(receipt.getId());
+        return response;
+    }
 
+
+    public long processReceipt(ReceiptProcessRequest request) {
         long points = 0;
         retailerReceiptValidation.validateRetailerReceiptRequest(request);
         points += request.getRetailer().chars() // Creates an IntStream
@@ -68,11 +74,9 @@ public class ReceiptProcessorService {
         } catch (DateTimeException e) {
             throw new RuntimeException(e);
         }
-        RetailerReceipt receipt = ReceiptProcessorToRetailerMap.requestToEntity(request, points);
-        retailerReceiptRepository.save(receipt);
-        response.setId(receipt.getId());
-        return response;
+        return points;
     }
+
 
     public GetPointsResponse getPoints(String id) {
         GetPointsResponse response = new GetPointsResponse();

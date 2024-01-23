@@ -23,7 +23,6 @@ public class ApplicationExceptionalHandler {
         return errorMap;
     }
 
-
     @ExceptionHandler(CustomExceptionHandler.class)
     public ResponseEntity<ExceptionResponse> customExceptionHandler(CustomExceptionHandler ex) {
         ExceptionResponse response = new ExceptionResponse();
